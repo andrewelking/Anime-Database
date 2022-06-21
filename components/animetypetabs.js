@@ -1,7 +1,7 @@
 import { Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 
-function AnimeTabs() {
+function AnimeTypeTabs() {
 	const [value, setValue] = useState(0);
 
 	const handleChange = (event, newValue) => {
@@ -9,7 +9,7 @@ function AnimeTabs() {
 	};
 
 	return (
-		<Tabs value={value} onChange={handleChange} sx={{ width: '1150px' }}>
+		<Tabs value={value} onChange={handleChange}>
 			<Tab label='TV' />
 			<Tab label='Movies' />
 			<Tab label='OVA &amp; Others' />
@@ -18,4 +18,4 @@ function AnimeTabs() {
 	);
 }
 
-export default AnimeTabs;
+export default AnimeTypeTabs;

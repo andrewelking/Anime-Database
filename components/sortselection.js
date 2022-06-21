@@ -9,7 +9,7 @@ function SortSelection() {
 	};
 
 	return (
-		<FormControl sx={{ width: '400px' }}>
+		<FormControl fullWidth>
 			<InputLabel id='demo-simple-select-label'>Sort by</InputLabel>
 			<Select
 				labelId='demo-simple-select-label'

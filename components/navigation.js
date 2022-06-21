@@ -1,16 +1,22 @@
 import SeasonButtons from './seasonbuttons';
-import AnimeTabs from './animetabs';
+import AnimeTypeTabs from './animetypetabs';
 import SortSelection from './sortselection';
-import { Box, Stack } from '@mui/material';
+import { Grid } from '@mui/material';
 
 function Navigation() {
 	return (
 		<>
-			<Stack direction='row' mt='20px'>
-				<SeasonButtons />
-				<AnimeTabs />
-				<SortSelection />
-			</Stack>
+			<Grid container alignItems='center' columns={14} mt='20px'>
+				<Grid item xs={3}>
+					<SeasonButtons />
+				</Grid>
+				<Grid item xs={8}>
+					<AnimeTypeTabs />
+				</Grid>
+				<Grid item xs={3}>
+					<SortSelection />
+				</Grid>
+			</Grid>
 		</>
 	);
 }
