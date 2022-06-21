@@ -28,17 +28,22 @@ function SeasonButtons() {
 		<Grid container align='center' alignItems='center'>
 			<Grid item xs={2}>
 				<IconButton size='large' onClick={handleClick}>
-					<ChevronLeft fontSize='inherit' id='left-button'></ChevronLeft>
+					<ChevronLeft
+						fontSize='inherit'
+						id='left-button'></ChevronLeft>
 				</IconButton>
 			</Grid>
 			<Grid item xs={8}>
 				<h1>
-					{myCtx.currentSeason} {myCtx.currentYear}
+					{myCtx.currentSeason}{' '}
+					{myCtx.currentYear}
 				</h1>
 			</Grid>
 			<Grid item xs={2}>
 				<IconButton size='large' onClick={handleClick}>
-					<ChevronRight fontSize='inherit' id='right-button'></ChevronRight>
+					<ChevronRight
+						fontSize='inherit'
+						id='right-button'></ChevronRight>
 				</IconButton>
 			</Grid>
 		</Grid>
