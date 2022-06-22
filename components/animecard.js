@@ -1,5 +1,4 @@
 import { Card, CardContent, Grid } from '@mui/material';
-import { Box } from '@mui/system';
 import Image from 'next/image';
 
 function AnimeCard({ images, title, studios, episodes, duration, synopsis }) {
