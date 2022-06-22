@@ -2,48 +2,73 @@ import { Card, CardContent, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import Image from 'next/image';
 
-function AnimeCard({ image, title, studio, episodes, duration, synopsis }) {
+function AnimeCard({ images, title, studios, episodes, duration, synopsis }) {
 	return (
-		<Grid
-			item
-			xs={4}
-			sx={{
-				height: '350px',
-			}}>
-			<Card>
-				<CardContent>
-					<Grid container item spacing={2}>
-						<Grid item xs={4}>
+		<Grid item container xs={4}>
+			<Card
+				variant='outlined'
+				sx={{ height: '350px', width: '100%' }}>
+				<CardContent
+					sx={{
+						height: '100%',
+					}}>
+					<Grid
+						item
+						container
+						height='100%'
+						gap={4}>
+						<Grid
+							item
+							position='relative'
+							xs={4}
+							height='100%'>
 							<Image
-								src={image}
+								src={images}
 								alt='anime-picture'
-								width='188px'
-								height='188px'
+								layout='fill'
 							/>
 						</Grid>
-						<Grid item xs={8}>
-							<Box
-								sx={{
-									overflow: 'hidden',
-								}}>
+						<Grid
+							item
+							container
+							direction='column'
+							xs={7}
+							gap={2}
+							height='100%'>
+							<Grid
+								item
+								xs={1}
+								overflow='hidden'>
 								<h3>{title}</h3>
-							</Box>
-							<p>{studio}</p>
-							<p>
-								{episodes} x{' '}
-								{duration}
-							</p>
-							<Box
+							</Grid>
+							<Grid item>
+								<p>{studios}</p>
+							</Grid>
+							<Grid item>
+								<p>
+									{
+										episodes
+									}{' '}
+									x{' '}
+									{
+										duration
+									}
+								</p>
+							</Grid>
+							<Grid
+								item
+								overflow='scroll'
+								xs={7.6}
 								sx={{
-									height: '200px',
-									overflow: 'scroll',
+									scrollbarWidth:
+										'none',
 								}}>
 								<p>
 									{
 										synopsis
 									}
 								</p>
-							</Box>
+							</Grid>
 						</Grid>
 					</Grid>
 				</CardContent>

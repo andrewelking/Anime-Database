@@ -1,7 +1,8 @@
-import { Grid, Item } from '@mui/material';
+import { Card, CardContent, Grid, Item } from '@mui/material';
 import AnimeCard from './animecard';
 import { useContext, useEffect, useState } from 'react';
 import myContext from '../myContext';
+let studioList;
 
 function AnimeList() {
 	const myCtx = useContext(myContext);
@@ -10,7 +11,7 @@ function AnimeList() {
 
 	useEffect(() => {
 		axios.get(
-			`https://api.jikan.moe/v4/seasons/${myCtx.currentYear}/Spring`
+			`https://api.jikan.moe/v4/seasons/${myCtx.currentYear}/${myCtx.currentSeason}`
 		).then(function (response) {
 			let anime = response.data.data;
 			setAnimeList(anime);
@@ -18,7 +19,7 @@ function AnimeList() {
 	}, [myCtx.currentSeason, myCtx.currentYear]);
 
 	return (
-		<Grid container spacing={4}>
+		<Grid container spacing={4} mt='20px'>
 			{animeList?.map(
 				({
 					mal_id,
@@ -28,20 +29,34 @@ function AnimeList() {
 					episodes,
 					duration,
 					synopsis,
-				}) => (
-					<AnimeCard
-						key={mal_id}
-						image={
-							images.jpg
-								.large_image_url
-						}
-						title={title}
-						studios={studios[0].name}
-						episodes={episodes}
-						duration={duration}
-						synopsis={synopsis}
-					/>
-				)
+				}) => {
+					return (
+						<AnimeCard
+							key={mal_id}
+							images={
+								images.jpg
+									.large_image_url
+							}
+							title={title}
+							studios={
+								(studioList =
+									studios
+										.map(
+											({
+												name,
+											}) =>
+												name
+										)
+										.join(
+											' & '
+										))
+							}
+							episodes={episodes}
+							duration={duration}
+							synopsis={synopsis}
+						/>
+					);
+				}
 			)}
 		</Grid>
 	);
