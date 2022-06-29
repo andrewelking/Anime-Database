@@ -24,10 +24,10 @@ function Layout({ children }) {
 								<h1>AnimeDB</h1>
 							</a>
 						</Link>
-						<Link href='seasonal'>
+						<Link href='/'>
 							<a>Seasonal Anime</a>
 						</Link>
-						<Link href='search'>
+						<Link href='/search'>
 							<a>Search anime</a>
 						</Link>
 					</Stack>

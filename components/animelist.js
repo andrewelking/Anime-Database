@@ -1,46 +1,66 @@
-import { Card, CardContent, Grid, Item } from '@mui/material';
+import { Grid } from '@mui/material';
 import AnimeCard from './animecard';
-import { useContext, useEffect, useState } from 'react';
-import myContext from '../myContext';
-let studioList;
+import { useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-function AnimeList() {
-	const myCtx = useContext(myContext);
-	const axios = require('axios').default;
-	const [animeList, setAnimeList] = useState();
+function AnimeList({ myData }) {
+	let studioList;
+	const year = useSelector((state) => state.season.year);
+	const season = useSelector((state) => state.season.season);
+	const [animeList, setAnimeList] = useState(myData);
+	const [page, setPage] = useState(2);
+	const [hasMore, setHasMore] = useState(true);
 
 	useEffect(() => {
-		axios.get(
-			`https://api.jikan.moe/v4/seasons/${myCtx.currentYear}/${myCtx.currentSeason}`
-		).then(function (response) {
-			let anime = response.data.data;
-			setAnimeList(anime);
-		});
-	}, [myCtx.currentSeason, myCtx.currentYear]);
+		const fetchData = async () => {
+			let response = await axios.get(
+				`https://api.jikan.moe/v4/seasons/${year}/${season}`
+			);
+			let data = await response.data;
+			let list = data.data;
+			setAnimeList(list);
+			setPage(1);
+			setHasMore(true);
+		};
+		fetchData();
+	}, [year, season]);
+
+	const fetchMoreData = async () => {
+		let response = await axios.get(
+			`https://api.jikan.moe/v4/seasons/${year}/${season}?page=${page}`
+		);
+		let data = await response.data;
+		let totalPage = data.pagination.last_visible_page;
+		let list = data.data;
+
+		if (page < totalPage) {
+			setPage(page + 1);
+		} else {
+			setHasMore(false);
+		}
+		setAnimeList([...animeList, ...list]);
+	};
 
 	return (
-		<Grid container spacing={4} mt='20px'>
-			{animeList?.map(
-				({
-					mal_id,
-					images,
-					title,
-					studios,
-					episodes,
-					duration,
-					synopsis,
-				}) => {
+		<InfiniteScroll
+			dataLength={animeList.length}
+			next={fetchMoreData}
+			hasMore={hasMore}>
+			<Grid container spacing={4} mt='20px'>
+				{animeList.map((anime, index) => {
 					return (
 						<AnimeCard
-							key={mal_id}
+							key={index}
 							images={
-								images.jpg
+								anime.images.jpg
 									.large_image_url
 							}
-							title={title}
+							title={anime.title}
 							studios={
 								(studioList =
-									studios
+									anime.studios
 										.map(
 											({
 												name,
@@ -51,14 +71,20 @@ function AnimeList() {
 											' & '
 										))
 							}
-							episodes={episodes}
-							duration={duration}
-							synopsis={synopsis}
+							episodes={
+								anime.episodes
+							}
+							duration={
+								anime.duration
+							}
+							synopsis={
+								anime.synopsis
+							}
 						/>
 					);
-				}
-			)}
-		</Grid>
+				})}
+			</Grid>
+		</InfiniteScroll>
 	);
 }
 

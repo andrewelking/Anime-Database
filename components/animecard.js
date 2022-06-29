@@ -40,10 +40,10 @@ function AnimeCard({ images, title, studios, episodes, duration, synopsis }) {
 								overflow='hidden'>
 								<h3>{title}</h3>
 							</Grid>
-							<Grid item>
+							<Grid item xs={1}>
 								<p>{studios}</p>
 							</Grid>
-							<Grid item>
+							<Grid item xs={1}>
 								<p>
 									{
 										episodes
@@ -57,7 +57,7 @@ function AnimeCard({ images, title, studios, episodes, duration, synopsis }) {
 							<Grid
 								item
 								overflow='scroll'
-								xs={7.6}
+								xs={6.5}
 								sx={{
 									scrollbarWidth:
 										'none',

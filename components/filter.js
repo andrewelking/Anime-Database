@@ -3,10 +3,14 @@ import AnimeTypeTabs from './animetypetabs';
 import SortSelection from './sortselection';
 import { Grid } from '@mui/material';
 
-function Navigation() {
+function Filter() {
 	return (
 		<>
-			<Grid container alignItems='center' columns={14} mt='20px'>
+			<Grid
+				container
+				alignItems='center'
+				columns={14}
+				mt='20px'>
 				<Grid item xs={3}>
 					<SeasonButtons />
 				</Grid>
@@ -21,4 +25,4 @@ function Navigation() {
 	);
 }
 
-export default Navigation;
+export default Filter;
