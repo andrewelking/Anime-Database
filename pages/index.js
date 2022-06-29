@@ -3,8 +3,12 @@ import styles from '../styles/Home.module.css';
 import AnimeList from '../components/animelist';
 import Filter from '../components/filter';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setAnimeList } from '../redux/seasonSlice';
 
 export default function Home({ myData }) {
+	const dispatch = useDispatch();
+	dispatch(setAnimeList(myData));
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -17,7 +21,7 @@ export default function Home({ myData }) {
 			</Head>
 			<main>
 				<Filter />
-				<AnimeList myData={myData} />
+				<AnimeList />
 			</main>
 		</div>
 	);

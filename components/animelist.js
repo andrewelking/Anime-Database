@@ -1,30 +1,37 @@
-import { Grid } from '@mui/material';
+import { fabClasses, Grid } from '@mui/material';
 import AnimeCard from './animecard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { setAnimeList } from '../redux/seasonSlice';
 
-function AnimeList({ myData }) {
+function AnimeList() {
 	let studioList;
+	const dispatch = useDispatch();
 	const year = useSelector((state) => state.season.year);
 	const season = useSelector((state) => state.season.season);
-	const [animeList, setAnimeList] = useState(myData);
+	const animeList = useSelector((state) => state.season.animeList);
+
 	const [page, setPage] = useState(2);
 	const [hasMore, setHasMore] = useState(true);
+	const [isFirstLoad, setIsFirstLoad] = useState(true);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			let response = await axios.get(
-				`https://api.jikan.moe/v4/seasons/${year}/${season}`
-			);
-			let data = await response.data;
-			let list = data.data;
-			setAnimeList(list);
-			setPage(1);
-			setHasMore(true);
-		};
-		fetchData();
+		if (!isFirstLoad) {
+			const fetchData = async () => {
+				let response = await axios.get(
+					`https://api.jikan.moe/v4/seasons/${year}/${season}`
+				);
+				let data = await response.data;
+				let list = data.data;
+				dispatch(setAnimeList(list));
+				setPage(1);
+				setHasMore(true);
+			};
+			fetchData();
+		}
+		setIsFirstLoad(false);
 	}, [year, season]);
 
 	const fetchMoreData = async () => {
@@ -40,7 +47,7 @@ function AnimeList({ myData }) {
 		} else {
 			setHasMore(false);
 		}
-		setAnimeList([...animeList, ...list]);
+		dispatch(setAnimeList([...animeList, ...list]));
 	};
 
 	return (

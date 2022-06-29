@@ -10,7 +10,6 @@ let seasons = {
 	Fall: [10, 11, 12],
 };
 let currentSeason;
-let myData;
 
 for (let i in seasons) {
 	if (seasons[i].includes(month)) currentSeason = i;
@@ -22,7 +21,7 @@ export const seasonSlice = createSlice({
 		month: month,
 		year: year,
 		season: currentSeason,
-		animeList: myData,
+		animeList: [],
 	},
 	reducers: {
 		backwardSeason: (state) => {
@@ -49,9 +48,13 @@ export const seasonSlice = createSlice({
 					state.season = i;
 			}
 		},
+		setAnimeList: (state, action) => {
+			state.animeList = action.payload;
+		},
 	},
 });
 
-export const { backwardSeason, forwardSeason } = seasonSlice.actions;
+export const { backwardSeason, forwardSeason, setAnimeList } =
+	seasonSlice.actions;
 
 export default seasonSlice.reducer;
